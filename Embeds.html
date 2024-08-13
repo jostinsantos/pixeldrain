@@ -1,0 +1,267 @@
+<?php 
+error_reporting(0);
+    
+    $data = (isset($_GET['data'])) ? $_GET['data'] : '';
+
+    if ($data != '') {
+      
+      include_once 'config.php';
+
+      $data = json_decode(decode($data));
+
+      $link = (isset($data->link)) ? $data->link : '';
+
+      $sub = (isset($data->sub)) ? $data->sub : '';
+
+      $poster = (isset($data->poster)) ? $data->poster : '';
+
+      $caption = (isset($data->caption)) ? $data->caption : '';
+
+      $titulo = (isset($data->titulo)) ? $data->titulo : '';
+
+      $tracks = '';
+      
+      foreach ($sub as $key => $value) {
+          $tracks .= '{ 
+                    file: "'.$value.'", 
+                    label: "'.$key.'",
+                    kind: "captions"
+                 },';
+      }
+
+      include_once 'curl.php';
+
+      $curl = new cURL();
+
+      $linkDropbox = str_replace('', '', $link);
+
+        $linkDropbox = $linkDropbox . '';
+        
+        $sources = $linkDropbox;
+
+
+      
+    } else echo 'Empty link!';
+?>
+<html data-lt-installed="true">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Embeds</title>
+    <link href="./Embeds_files/iframes.code.css" rel="stylesheet" />
+    <link href="./Embeds_files/css" rel="stylesheet" type="text/css" />
+
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests"
+    />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="robots" content="noindex,nofollow" />
+
+    <style>
+      #bgPlayer {
+        background-image: linear-gradient(rgba(16, 16, 23, 0.71), #000000),
+          url(https://www.themoviedb.org/t/p/original/fOy2Jurz9k6RnJnMUMRDAgBwru2.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+    <style>
+      .set .calidad {
+        background: #a81111;
+      }
+      .calidad {
+        margin-left: 5px;
+        background: #222;
+        padding: 5px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 13px;
+      }
+
+      @media screen and (max-width: 550px) {
+        .calidad {
+          font-size: 10px;
+          padding: 4px;
+        }
+      }
+      @media screen and (max-width: 294px) {
+        .calidad {
+          font-size: 7px;
+          padding: 4px;
+        }
+      }
+    </style>
+
+  </head>
+  <body>
+    <div>
+      <div id="ViewPlayer">
+        <div class="bground" id="bgPlayer"></div>
+        <div class="SelectLangDisp">
+          <li id="selectAudio">
+            <span class="title">Seleccionar Audio:</span>
+          </li>
+          <li onclick="IdiomaSet(this, &#39;1&#39;);" class="select set">
+            <span class="title">
+              <img src="./Embeds_files/Latino.png" />Latino<span class="calidad"
+                >HD</span
+              >
+            </span>
+          </li>
+
+          <li onclick="IdiomaSet(this, &#39;3&#39;);" class="select">
+            <span class="title">
+              <img src="./Embeds_files/Subtitulado.png" />Subtitulado<span
+                class="calidad"
+                >HD</span
+              >
+            </span>
+          </li>
+        </div>
+        <div class="OptionsLangDisp">
+          <center>
+            <div class="title">Selecciona un Servidor para Reproducir</div>
+            <div class="PlayerPx">
+              <div class="Player1 Actived">
+                <div class="embed">
+                  <li
+                    id="servers"
+                    onclick="go_to_player(&#39;https://www.fembed.com/v/e-q1lf-me04n4ky&#39;, 2, 1)"
+                  >
+                    <span class="icon"><span class="symbol"></span></span>
+                    <span class="serverx">latino</span>
+                    <div class="infosv">Fembed<i></i></div>
+                  </li>
+                  <li
+                    id="servers"
+                    onclick="go_to_player(&#39;https://www.fembed.com/v/e-q1lf-me04n4ky&#39;, 2, 1)"
+                  >
+                    <span class="icon"><span class="symbol"></span></span>
+                    <span class="serverx">PlaySB</span>
+                    <div class="infosv">Recomendado<i></i></div>
+                  </li>
+                  <li
+                    id="servers"
+                    onclick="go_to_player(&#39;https://player.appsmartt.com/fembedjw/embed.php?data=q96F7jdq2QFdGyj7fePZMjO3Vv2ICax17HjgsOLZG3AutcpwpkEwzzlgXrB/clwhplyfnZR7WLK77lF80JEQkcFLI8uXD0ibGLG68BFWW93SlsIWZZwXg3MrQzqNPGAB07wnJAf42mX1U1ilcIh28cao4Nrl2Qse1wDs1A==&#39;, 2, 1)"
+                  >
+                    <span class="icon"><span class="symbol"></span></span>
+                    <span class="serverx">MePlay</span>
+                    <div class="infosv">Recomendado<i></i></div>
+                  </li>
+                </div>
+                <p class="notex" onclick="cerrar()">
+                  Nota: Los servidores están ordenados del más rápido al más
+                  lento.
+                </p>
+                <div id="hide" class="cust">
+                  <a
+                    id="sugec"
+                    onclick="location.href=&#39;info.html&#39;;hide()"
+                    >Sugerencias</a
+                  >
+                </div>
+              </div>
+              <div class="Player2">
+                <div class="embed">
+                  <li
+                    id="servers"
+                    onclick="go_to_player(&#39;https://www.fembed.com/v/e-q1lf-me04n4ky&#39;, 2, 1)"
+                  >
+                    <span class="icon"><span class="symbol"></span></span>
+                    <span class="serverx">sub</span>
+                    <div class="infosv">Fembed<i></i></div>
+                  </li>
+                  <li
+                    id="servers"
+                    onclick="go_to_player(&#39;https://www.fembed.com/v/e-q1lf-me04n4ky&#39;, 2, 1)"
+                  >
+                    <span class="icon"><span class="symbol"></span></span>
+                    <span class="serverx">PlaySB</span>
+                    <div class="infosv">Recomendado<i></i></div>
+                  </li>
+                  <li
+                    id="servers"
+                    onclick="go_to_player(&#39;https://player.appsmartt.com/fembedjw/embed.php?data=q96F7jdq2QFdGyj7fePZMjO3Vv2ICax17HjgsOLZG3AutcpwpkEwzzlgXrB/clwhplyfnZR7WLK77lF80JEQkcFLI8uXD0ibGLG68BFWW93SlsIWZZwXg3MrQzqNPGAB07wnJAf42mX1U1ilcIh28cao4Nrl2Qse1wDs1A==&#39;, 2, 1)"
+                  >
+                    <span class="icon"><span class="symbol"></span></span>
+                    <span class="serverx">MePlay</span>
+                    <div class="infosv">Recomendado<i></i></div>
+                  </li>
+                </div>
+                <p class="notex" onclick="cerrar()">
+                  Nota: Los servidores están ordenados del más rápido al más
+                  lento.
+                </p>
+                <div id="hide" class="cust">
+                  <a
+                    id="sugec"
+                    onclick="location.href=&#39;info.html&#39;;hide()"
+                    >Sugerencias</a
+                  >
+                </div>
+              </div>
+              <div class="Player3">
+                <div class="embed">
+                  <li
+                    id="servers"
+                    onclick="go_to_player(&#39;https://www.fembed.com/v/e-q1lf-me04n4ky&#39;, 2, 1)"
+                  >
+                    <span class="icon"><span class="symbol"></span></span>
+                    <span class="serverx">sub</span>
+                    <div class="infosv">Fembed<i></i></div>
+                  </li>
+                  <li
+                    id="servers"
+                    onclick="go_to_player(&#39;https://www.fembed.com/v/e-q1lf-me04n4ky&#39;, 2, 1)"
+                  >
+                    <span class="icon"><span class="symbol"></span></span>
+                    <span class="serverx">PlaySB</span>
+                    <div class="infosv">Recomendado<i></i></div>
+                  </li>
+                  <li
+                    id="servers"
+                    onclick="go_to_player(&#39;https://player.appsmartt.com/fembedjw/embed.php?data=q96F7jdq2QFdGyj7fePZMjO3Vv2ICax17HjgsOLZG3AutcpwpkEwzzlgXrB/clwhplyfnZR7WLK77lF80JEQkcFLI8uXD0ibGLG68BFWW93SlsIWZZwXg3MrQzqNPGAB07wnJAf42mX1U1ilcIh28cao4Nrl2Qse1wDs1A==&#39;, 2, 1)"
+                  >
+                    <span class="icon"><span class="symbol"></span></span>
+                    <span class="serverx">MePlay</span>
+                    <div class="infosv">Recomendado<i></i></div>
+                  </li>
+                </div>
+                <p class="notex" onclick="cerrar()">
+                  Nota: Los servidores están ordenados del más rápido al más
+                  lento.
+                </p>
+                <div id="hide" class="cust">
+                  <a
+                    id="sugec"
+                    onclick="location.href=&#39;info.html&#39;;hide()"
+                    >Sugerencias</a
+                  >
+                </div>
+              </div>
+            </div>
+          </center>
+        </div>
+      </div>
+      <div class="PlayerView"></div>
+      <div class="PlayGet"></div>
+      <div class="ShowPlay"></div>
+      <div class="compatible">
+        <center>
+          <div></div>
+        </center>
+      </div>
+    </div>
+    <script src="./Embeds_files/jquery-3.6.0.slim.min.js.descarga"></script>
+    <script src="./Embeds_files/iframe.codevs.js.descarga"></script>
+    <script type="text/javascript">
+      function hide() {
+        document.getElementById("hide").style.display = "none";
+      }
+    </script>
+  </body>
+</html>
